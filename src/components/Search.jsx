@@ -1,13 +1,7 @@
 import React from "react";
 
 //chakraui components
-import {
-  Flex,
-  Heading,
-  Input,
-  InputGroup,
-  InputLeftElement,
-} from "@chakra-ui/core";
+import { Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/core";
 
 //icons
 import { FiSearch } from "react-icons/fi";

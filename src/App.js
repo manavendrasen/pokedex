@@ -13,13 +13,16 @@ import theme from "./theme";
 import { Search } from "./components/Search";
 import { PokemonList } from "./components/pokemon/PokemonList";
 
+//data
+import requests from "./requests/request";
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <Container>
         <h1>Pokedex</h1>
         <Search />
-        <PokemonList />
+        <PokemonList fetchUrl={requests.fetchPokemon} />
       </Container>
     </ThemeProvider>
   );
