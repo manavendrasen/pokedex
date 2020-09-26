@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Flex, SimpleGrid, SliderTrack } from "@chakra-ui/core";
+import { SimpleGrid } from "@chakra-ui/core";
 import { CircularProgress } from "@material-ui/core";
 
 //components
@@ -13,7 +13,7 @@ export const PokemonList = (props) => {
   const { fetchUrl } = props;
   const [pokemon, setPokemon] = useState([]);
 
-  //geting the movies
+  //geting the pokemon
   useEffect(() => {
     //if [] runs one time and doesnt run again,
     //[pokemon] means when variable changes this will run
@@ -31,6 +31,7 @@ export const PokemonList = (props) => {
         <SimpleGrid columns={[2, 2, 3, 5]} spacing={5}>
           {pokemon.map((pokemon, index) => {
             let { name } = pokemon;
+
             //formatting the name to have first letter capital
             name = name.charAt(0).toUpperCase() + name.slice(1);
             return (
