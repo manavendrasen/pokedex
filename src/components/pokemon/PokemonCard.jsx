@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const PokemonCard = (props) => {
   //images
-  const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.index}.png`;
+  const imageUrl = `https://pokeres.bastionbot.org/images/pokemon/${props.index}.png`;
 
   return (
     <Link
@@ -16,6 +16,8 @@ export const PokemonCard = (props) => {
     >
       <Box bg="gray.100" p="1rem" rounded="md">
         <Image
+          p="0.5rem"
+          mb="1.5rem"
           m="auto"
           src={imageUrl}
           w={["100px", "100px", "100%", "100%"]}
@@ -23,10 +25,12 @@ export const PokemonCard = (props) => {
           justifyContent="center"
           alignItems="center"
         />
-        <Text color="gray.600" fontWeight="bold">
+        <Text my="0.5rem" color="gray.500" fontWeight="bold">
           #{props.index}
         </Text>
-        <Heading size="lg">{props.children}</Heading>
+        <Heading mb="0.5rem" size="lg">
+          {props.children}
+        </Heading>
       </Box>
     </Link>
   );
