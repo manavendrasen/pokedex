@@ -14,7 +14,7 @@ export const PokemonCard = (props) => {
       }}
       to={`/${props.index}`}
     >
-      <Box bg="gray.100" p="1rem" rounded="md">
+      <Box fontSize="1rem" bg="gray.100" p="1rem" rounded="md">
         <Image
           p="0.5rem"
           mb="1.5rem"

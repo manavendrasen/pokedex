@@ -5,9 +5,12 @@ import { CircularProgress } from "@material-ui/core";
 //components
 import { PokemonCard } from "./PokemonCard";
 
+//capital function
+import { toFirstCharUppercase } from "../../utils/functions";
+
 //axios
 import axios from "../../axios/axios";
-const LIMIT = 20;
+const LIMIT = 807;
 
 export const PokemonList = (props) => {
   const { fetchUrl } = props;
@@ -33,7 +36,7 @@ export const PokemonList = (props) => {
             let { name } = pokemon;
 
             //formatting the name to have first letter capital
-            name = name.charAt(0).toUpperCase() + name.slice(1);
+            name = toFirstCharUppercase(name);
             return (
               <PokemonCard index={index + 1} key={index}>
                 {name}
