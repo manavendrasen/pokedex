@@ -14,12 +14,14 @@ import theme from "./theme";
 import Dashboard from "./views/Dashboard";
 import PokemonDetails from "./views/PokemonDetails";
 
+//components
+import Navbar from "./components/Navbar";
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
+        <Navbar />
         <Container>
-          <h1>Pokedex</h1>
           <Switch>
             <Route
               exact
