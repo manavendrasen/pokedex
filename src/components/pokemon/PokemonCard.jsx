@@ -1,8 +1,12 @@
 import React from "react";
 import { Box, Text, Heading, Image } from "@chakra-ui/core";
 import { Link } from "react-router-dom";
-
+import { CircularProgress } from "@material-ui/core";
 export const PokemonCard = (props) => {
+  if (props.loading) {
+    return <CircularProgress />;
+  }
+
   //images
   const imageUrl = `https://pokeres.bastionbot.org/images/pokemon/${props.index}.png`;
 
