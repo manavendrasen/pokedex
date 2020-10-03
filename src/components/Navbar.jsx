@@ -1,14 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Container,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Button, Container } from "@material-ui/core";
 
 import { Heading } from "@chakra-ui/core";
 

@@ -11,8 +11,7 @@ import { toFirstCharUppercase } from "../../utils/functions";
 
 //axios
 import axios from "../../axios/axios";
-const LIMIT = 800;
-
+import { LIMIT } from "../../utils/constants";
 export const PokemonList = (props) => {
   const { fetchUrl } = props;
   const [pokemon, setPokemon] = useState([]);
@@ -53,7 +52,7 @@ export const PokemonList = (props) => {
   return (
     <div>
       {pokemon ? (
-        <Flex alignItems="center" direction="column">
+        <div>
           <SimpleGrid columns={[2, 2, 3, 5]} spacing={5}>
             {currentPokemon.map((pokemon, index) => {
               let { name } = pokemon;
@@ -71,13 +70,15 @@ export const PokemonList = (props) => {
               );
             })}
           </SimpleGrid>
-          <Box my="2rem">
-            <Pagination
-              count={pokemon.length / pokemonPerPage}
-              onChange={paginate}
-            />
-          </Box>
-        </Flex>
+          <Flex alignItems="center" direction="column">
+            <Box my="2rem">
+              <Pagination
+                count={pokemon.length / pokemonPerPage}
+                onChange={paginate}
+              />
+            </Box>
+          </Flex>
+        </div>
       ) : (
         <CircularProgress />
       )}
