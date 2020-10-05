@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Flex, SimpleGrid } from "@chakra-ui/core";
 import { Box, CircularProgress } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
@@ -15,25 +15,9 @@ import { LIMIT } from "../../utils/constants";
 export const PokemonList = (props) => {
   const { fetchUrl } = props;
   const [pokemon, setPokemon] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonPerPage] = useState(10);
-
-  //geting the pokemon
-  useEffect(() => {
-    //if [] runs one time and doesnt run again,
-    //[pokemon] means when variable changes this will run
-
-    const fetchData = async () => {
-      setLoading(true);
-      const request = await axios.get(fetchUrl + `?limit=${LIMIT}`);
-      setPokemon(request.data.results);
-      console.log(request.data.results);
-      setLoading(false);
-    };
-
-    fetchData();
-  }, [fetchUrl]);
 
   //get current pokemon
   const indexOfLastPokemon = currentPage * pokemonPerPage;
@@ -49,39 +33,53 @@ export const PokemonList = (props) => {
     return (currentPage - 1) * pokemonPerPage + index + 1;
   };
 
-  return (
-    <div>
-      {pokemon ? (
-        <div>
-          <SimpleGrid columns={[2, 2, 3, 5]} spacing={5}>
-            {currentPokemon.map((pokemon, index) => {
-              let { name } = pokemon;
+  //geting the pokemon
+  useEffect(() => {
+    //if [] runs one time and doesnt run again,
+    //[pokemon] means when variable changes this will run
 
-              //formatting the name to have first letter capital
-              name = toFirstCharUppercase(name);
-              return (
-                <PokemonCard
-                  loading={loading}
-                  index={indexOfPokemon(index, currentPage)}
-                  key={index}
-                >
-                  {name}
-                </PokemonCard>
-              );
-            })}
-          </SimpleGrid>
-          <Flex alignItems="center" direction="column">
-            <Box my="2rem">
-              <Pagination
-                count={pokemon.length / pokemonPerPage}
-                onChange={paginate}
-              />
-            </Box>
-          </Flex>
-        </div>
-      ) : (
-        <CircularProgress />
-      )}
-    </div>
-  );
+    const fetchData = async () => {
+      const request = await axios.get(fetchUrl + `?limit=${LIMIT}`);
+
+      setPokemon(request.data.results);
+
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [fetchUrl]);
+
+  if (loading) {
+    return <CircularProgress />;
+  } else {
+    return (
+      <>
+        <SimpleGrid columns={[2, 2, 3, 5]} spacing={5}>
+          {currentPokemon.map((pokemon, index) => {
+            let { name } = pokemon;
+
+            //formatting the name to have first letter capital
+            name = toFirstCharUppercase(name);
+            return (
+              <PokemonCard
+                loading={loading}
+                index={indexOfPokemon(index, currentPage)}
+                key={index}
+              >
+                {name}
+              </PokemonCard>
+            );
+          })}
+        </SimpleGrid>
+        <Flex alignItems="center" direction="column">
+          <Box my="2rem">
+            <Pagination
+              count={pokemon.length / pokemonPerPage}
+              onChange={paginate}
+            />
+          </Box>
+        </Flex>
+      </>
+    );
+  }
 };
