@@ -15,14 +15,15 @@ import { LIMIT } from "../../utils/constants";
 export const PokemonList = (props) => {
   const { fetchUrl } = props;
   const [pokemon, setPokemon] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonPerPage] = useState(10);
+  const [filter, setFilter] = useState("");
 
-  //get current pokemon
-  const indexOfLastPokemon = currentPage * pokemonPerPage;
-  const indexOfFirstPokemon = indexOfLastPokemon - pokemonPerPage;
-  const currentPokemon = pokemon.slice(indexOfFirstPokemon, indexOfLastPokemon);
+  //search
+  const handleSearchChange = (e) => {
+    setFilter(e.target.value);
+  };
 
   const paginate = (event, value) => {
     setCurrentPage(value);
@@ -39,15 +40,20 @@ export const PokemonList = (props) => {
     //[pokemon] means when variable changes this will run
 
     const fetchData = async () => {
-      const request = await axios.get(fetchUrl + `?limit=${LIMIT}`);
+      setLoading(true);
+      const request = await axios.get(
+        fetchUrl +
+          `?limit=${pokemonPerPage}&offset=${
+            (currentPage - 1) * pokemonPerPage
+          }`
+      );
 
       setPokemon(request.data.results);
-
       setLoading(false);
     };
 
     fetchData();
-  }, [fetchUrl]);
+  }, [fetchUrl, currentPage, pokemonPerPage]);
 
   if (loading) {
     return <CircularProgress />;
@@ -55,7 +61,7 @@ export const PokemonList = (props) => {
     return (
       <>
         <SimpleGrid columns={[2, 2, 3, 5]} spacing={5}>
-          {currentPokemon.map((pokemon, index) => {
+          {pokemon.map((pokemon, index) => {
             let { name } = pokemon;
 
             //formatting the name to have first letter capital
@@ -73,10 +79,7 @@ export const PokemonList = (props) => {
         </SimpleGrid>
         <Flex alignItems="center" direction="column">
           <Box my="2rem">
-            <Pagination
-              count={pokemon.length / pokemonPerPage}
-              onChange={paginate}
-            />
+            <Pagination count={LIMIT / pokemonPerPage} onChange={paginate} />
           </Box>
         </Flex>
       </>
