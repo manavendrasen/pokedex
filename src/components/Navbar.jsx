@@ -5,6 +5,9 @@ import { AppBar, Toolbar, Button, Container } from "@material-ui/core";
 
 import { Heading } from "@chakra-ui/core";
 
+//routes
+import { ABOUT, HOME } from "../utils/routes/routes";
+
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Fab from "@material-ui/core/Fab";
@@ -70,16 +73,25 @@ const Navabr = () => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar color="inherit" className={classes.navbar} position="static">
+      <AppBar
+        id="back-to-top-anchor"
+        color="inherit"
+        className={classes.navbar}
+        position="static"
+      >
         <Container>
           <Toolbar className={classes.toolbar}>
             <Heading size="lg" ml="0" className={classes.title}>
-              <Link className={classes.link} to="/">
+              <Link className={classes.link} to={HOME}>
                 Pokedex{" "}
               </Link>
             </Heading>
 
-            <Button color="inherit">About</Button>
+            <Button color="inherit">
+              <Link className={classes.link} to={ABOUT}>
+                About
+              </Link>
+            </Button>
           </Toolbar>
         </Container>
       </AppBar>

@@ -13,9 +13,11 @@ import theme from "./theme";
 //views
 import Dashboard from "./views/Dashboard";
 import PokemonDetails from "./views/PokemonDetails";
-
+import About from "./views/About";
+import NoMatch from "./views/NoMatch";
 //components
 import Navbar from "./components/Navbar";
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -30,9 +32,17 @@ function App() {
             />
             <Route
               exact
-              path="/:pokemonIndex"
+              path="/about"
+              render={(props) => <About {...props} />}
+            />
+            <Route
+              exact
+              path="/pokemon/:pokemonIndex"
               render={(props) => <PokemonDetails {...props} />}
             />
+            <Route path="*">
+              <NoMatch />
+            </Route>
           </Switch>
         </Container>
       </Router>
