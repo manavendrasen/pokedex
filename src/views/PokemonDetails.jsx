@@ -9,19 +9,23 @@ import { toFirstCharUppercase } from "../utils/functions";
 
 //conponents
 import { Chart } from "../components/chart/Chart";
+import PopoverInfo from "../components/PopoverInfo";
 
 const PokemonDetails = ({ match }) => {
   const { pokemonIndex } = match.params;
   const url = requests.fetchPokemon;
   const [pokemon, setPokemon] = useState({});
   const [loading, setLoading] = useState(true);
-  //images
-  const imageUrl = `https://pokeres.bastionbot.org/images/pokemon/${pokemonIndex}.png`;
+  const [image, setImage] = useState("");
 
   //geting the pokemon details
   useEffect(() => {
     const fetchData = async () => {
       const request = await axios.get(url + `/${pokemonIndex}`);
+      setImage(
+        `https://pokeres.bastionbot.org/images/pokemon/${pokemonIndex}.png`
+      );
+
       setPokemon(request.data);
       setLoading(false);
     };
@@ -49,7 +53,7 @@ const PokemonDetails = ({ match }) => {
               bg="gray.100"
               p="2rem"
               width={["100%", "400px", "400px", "500px"]}
-              src={imageUrl}
+              src={image}
             ></Image>
           </Flex>
           <Flex
@@ -74,10 +78,19 @@ const PokemonDetails = ({ match }) => {
                 <Text>{weight / 10} kg</Text>
               </Box>
             </Flex>
-            <Box my="1rem">
-              <Heading my="0.5rem" size="md">
-                Ability
-              </Heading>
+            <Box mb="1rem">
+              <Flex my="0.5rem">
+                <Heading mr="0.5rem" size="md">
+                  Ability
+                </Heading>
+                <PopoverInfo header="Ability">
+                  An Ability (Japanese: 特性 ability) is a game mechanic
+                  introduced in Generation III that provides a passive effect in
+                  battle or in the overworld. Individual Pokémon may have only
+                  one Ability at a time.
+                </PopoverInfo>
+              </Flex>
+
               <Flex>
                 {abilities.map((abilitiesInfo, index) => {
                   const { ability } = abilitiesInfo;
@@ -91,7 +104,18 @@ const PokemonDetails = ({ match }) => {
               </Flex>
             </Box>
             <Box>
-              <Heading size="md">Type</Heading>
+              <Flex>
+                <Heading mr="0.5rem" size="md">
+                  Type
+                </Heading>
+                <PopoverInfo header="Types">
+                  Types (Japanese: タイプ Type) are properties for Pokémon and
+                  their moves. As of Generation VI, there are 18 types. The
+                  types are based on the concept of classical elements in
+                  popular culture.
+                </PopoverInfo>
+              </Flex>
+
               <Flex>
                 {/* types */}
                 {types.map((typeInfo, index) => {
@@ -121,7 +145,7 @@ const PokemonDetails = ({ match }) => {
           <Heading my="0.5rem" size="xl">
             Stats
           </Heading>
-          <Text fontSize="1rem">
+          <Text color="gray.500" fontSize="1rem">
             Species strengths, commonly referred to by fans as base stats
             (Japanese: 種族値 values of the species' attributes), are the
             inherent values of a species or form of a species that are used to
