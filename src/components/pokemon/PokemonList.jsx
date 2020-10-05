@@ -18,12 +18,6 @@ export const PokemonList = (props) => {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonPerPage] = useState(10);
-  const [filter, setFilter] = useState("");
-
-  //search
-  const handleSearchChange = (e) => {
-    setFilter(e.target.value);
-  };
 
   const paginate = (event, value) => {
     setCurrentPage(value);

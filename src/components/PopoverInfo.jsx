@@ -16,13 +16,7 @@ const PopoverInfo = (props) => {
     <Box display="inline-block" {...props}>
       <Popover>
         <PopoverTrigger>
-          <Button
-            variantColor="gray.500"
-            color="gray"
-            border="none"
-            padding="0rem"
-            size="xs"
-          >
+          <Button color="gray" border="none" padding="0rem" size="xs">
             ?
           </Button>
         </PopoverTrigger>
