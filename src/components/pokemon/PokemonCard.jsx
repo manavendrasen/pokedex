@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Text, Heading, Image } from "@chakra-ui/core";
 import { Link } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
+
 export const PokemonCard = (props) => {
   if (props.loading) {
     return <CircularProgress />;
@@ -16,7 +17,7 @@ export const PokemonCard = (props) => {
         textDecoration: "none",
         color: "black",
       }}
-      to={`/${props.index}`}
+      to={`/pokemon/${props.index}`}
     >
       <Box fontSize="1rem" bg="gray.100" p="1rem" rounded="md">
         <Image
