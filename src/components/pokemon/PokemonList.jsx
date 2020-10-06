@@ -1,6 +1,6 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Flex, SimpleGrid } from "@chakra-ui/core";
-import { Box, CircularProgress } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { Box, Flex, SimpleGrid } from "@chakra-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 
 //components
@@ -12,6 +12,7 @@ import { toFirstCharUppercase } from "../../utils/functions";
 //axios
 import axios from "../../axios/axios";
 import { LIMIT } from "../../utils/constants";
+
 export const PokemonList = (props) => {
   const { fetchUrl } = props;
   const [pokemon, setPokemon] = useState([]);
@@ -35,19 +36,24 @@ export const PokemonList = (props) => {
 
     const fetchData = async () => {
       setLoading(true);
-      const request = await axios.get(
-        fetchUrl +
-          `?limit=${pokemonPerPage}&offset=${
-            (currentPage - 1) * pokemonPerPage
-          }`
-      );
+      let request;
+      if (props.filter !== "") {
+        request = await axios.get(fetchUrl + `?limit=${LIMIT}`);
+      } else {
+        request = await axios.get(
+          fetchUrl +
+            `?limit=${pokemonPerPage}&offset=${
+              (currentPage - 1) * pokemonPerPage
+            }`
+        );
+      }
 
       setPokemon(request.data.results);
       setLoading(false);
     };
 
     fetchData();
-  }, [fetchUrl, currentPage, pokemonPerPage]);
+  }, [fetchUrl, currentPage, pokemonPerPage, props.filter]);
 
   if (loading) {
     return <CircularProgress />;
@@ -56,26 +62,44 @@ export const PokemonList = (props) => {
       <>
         <SimpleGrid columns={[2, 2, 3, 5]} spacing={5}>
           {pokemon.map((pokemon, index) => {
-            let { name } = pokemon;
+            let { name, url } = pokemon;
 
-            //formatting the name to have first letter capital
-            name = toFirstCharUppercase(name);
-            return (
-              <PokemonCard
-                loading={loading}
-                index={indexOfPokemon(index, currentPage)}
-                key={index}
-              >
-                {name}
-              </PokemonCard>
-            );
+            if (props.filter !== "") {
+              let id = parseInt(url.slice(34, 37));
+              if (name.includes(props.filter)) {
+                name = toFirstCharUppercase(name);
+                return (
+                  <PokemonCard loading={loading} index={id} key={index}>
+                    {name}
+                  </PokemonCard>
+                );
+              }
+            } else {
+              //formatting the name to have first letter capital
+              name = toFirstCharUppercase(name);
+              return (
+                <PokemonCard
+                  loading={loading}
+                  index={indexOfPokemon(index, currentPage)}
+                  key={index}
+                >
+                  {name}
+                </PokemonCard>
+              );
+            }
           })}
         </SimpleGrid>
-        <Flex alignItems="center" direction="column">
-          <Box my="2rem">
-            <Pagination count={LIMIT / pokemonPerPage} onChange={paginate} />
-          </Box>
-        </Flex>
+        {props.filter !== "" || (
+          <Flex alignItems="center" direction="column">
+            <Box my="2rem">
+              <Pagination
+                page={currentPage}
+                count={LIMIT / pokemonPerPage}
+                onChange={paginate}
+              />
+            </Box>
+          </Flex>
+        )}
       </>
     );
   }
