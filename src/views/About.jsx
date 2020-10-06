@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Heading,
-  Text,
-  Link,
-  List,
-  ListItem,
-  Box,
-  Flex,
-} from "@chakra-ui/core";
+import { Heading, Text, Link, Flex } from "@chakra-ui/core";
 import {
   AiFillGithub,
   AiFillLinkedin,
@@ -90,33 +82,6 @@ const About = () => {
           </Flex>
         </Flex>
       </Flex>
-      {/* <Flex
-        
-        direction="column"
-        // justifyContent="center"
-        // alignItems="center"
-      >
-        <Heading>About</Heading>
-        <Text fontSize="1rem" my="1rem">
-          Created by Manavendra sen
-          <br />
-          Aspiring MERN Stack Developer | UI/UX Enthusiast | Graphic Designing
-        </Text>
-
-        <Heading size="md" mt="1rem">
-          Description
-        </Heading>
-        {/* <Text my="0.5rem">
-          This is a simple react app, which uses pokeapi to fetch information
-          about Pokemon and display it.
-        </Text>
-        <Text fontWeight="bold">Tools used:</Text>
-        <List styleType="disc">
-          <ListItem>Material UI</ListItem>
-          <ListItem>Chakra UI</ListItem>
-          <ListItem>React ChartJS 2</ListItem>
-        </List> */}
-      {/* </Flex> */}
     </>
   );
 };

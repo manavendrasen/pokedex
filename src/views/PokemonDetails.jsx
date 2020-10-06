@@ -184,20 +184,18 @@ const PokemonDetails = ({ match }) => {
         </Flex>
         <Flex
           mt="1rem"
-          fontWeight="bold"
           bottom="0"
           justifyContent="center"
-          bg="gray.100"
           p="0.75rem"
           color="gray.500"
         >
           <Link
             fontSize="1rem"
             target="_blank"
-            color="blue.500"
+            color=".500"
             href="https://pokeapi.co/"
           >
-            Data from pokeapi.co
+            Information provided by pokeapi.co
           </Link>
         </Flex>
       </div>
