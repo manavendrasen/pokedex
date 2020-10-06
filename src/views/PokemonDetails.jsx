@@ -10,7 +10,7 @@ import { toFirstCharUppercase } from "../utils/functions";
 //conponents
 import { Chart, ChartMobile } from "../components/chart/Chart";
 import PopoverInfo from "../components/PopoverInfo";
-
+import NoMatch from "../views/NoMatch";
 const PokemonDetails = ({ match }) => {
   const { pokemonIndex } = match.params;
   const url = requests.fetchPokemon;
@@ -22,17 +22,24 @@ const PokemonDetails = ({ match }) => {
   //geting the pokemon details
   useEffect(() => {
     const fetchData = async () => {
-      const request = await axios.get(url + `/${pokemonIndex}`);
-      setImage(
-        `https://pokeres.bastionbot.org/images/pokemon/${pokemonIndex}.png`
-      );
+      try {
+        const request = await axios.get(url + `/${pokemonIndex}`);
+        setImage(
+          `https://pokeres.bastionbot.org/images/pokemon/${pokemonIndex}.png`
+        );
 
-      setPokemon(request.data);
-      setLoading(false);
+        setPokemon(request.data);
+        setLoading(false);
+      } catch (err) {
+        setPokemon(null);
+      }
     };
     fetchData();
   }, [url, pokemonIndex]);
 
+  if (pokemon === null) {
+    return <NoMatch />;
+  }
   if (loading) {
     return <CircularProgress />;
   } else {
